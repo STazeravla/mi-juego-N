@@ -1,0 +1,599 @@
+/* Estilos generales */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  background-color: #ffb6c1; /* Rosa pastel */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Cada pantalla ocupa toda la vista */
+.pantalla {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 1s ease; /* Animación suave */
+}
+
+/* Solo la activa se ve */
+.pantalla.activa {
+  opacity: 1;
+  z-index: 2;
+}
+
+/* Títulos */
+h1 {
+  color: #ff66b2;
+  font-size: 3rem;
+  margin-bottom: 60px;
+}
+
+/* Botones */
+button {
+  font-size: 2rem;
+  padding: 20px 80px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.3s;
+}
+
+/* Botón de la primera pantalla */
+#btnIniciar {
+  background-color: #adff2f; /* Verde lima */
+  color: #008000;
+}
+
+/* Botón de la segunda pantalla */
+#btnJuego {
+  background-color: #000;
+  color: white;
+}
+
+#btnCarta {
+  position: fixed;
+  bottom: 50px;
+  background-color: #ff69b4;
+  color: white;
+}
+
+/* Botón de Galería */
+#btnGalería {
+  position: fixed;
+  bottom: 50px;
+  right: 16%;
+  transform: translateX(-50%);
+  background-color: transparent;
+  color: #808080;
+  border: 2px solid #808080;
+  
+}
+
+#btnGalería:hover {
+  transform: translateX(-50%) scale(1.1);
+  color: #606060;
+  border-color: #606060;
+}
+
+/* Efecto hover */
+button:hover {
+  transform: scale(1.1);
+}
+
+/* Cuadro para la foto */
+.foto {
+  margin-top: 40px;
+  padding: 20px;
+  border: 2px solid pink;
+  border-radius: 10px;
+  color: pink;
+  font-size: 1.5rem;
+}
+/* Contenedor de flores */
+.flores {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Imagen base de las flores */
+.flor {
+  position: absolute;
+  bottom: -150px; /* Están más abajo al inicio, pero terminan visibles */
+  width: 200px;
+  opacity: 0;
+}
+
+/* Flor izquierda */
+.flor-izquierda {
+  left: 40px;
+  animation: subirIzquierda 2.2s cubic-bezier(0.25, 1.5, 0.5, 1) forwards;
+  animation-delay: 0.5s;
+}
+
+/* Flor derecha */
+.flor-derecha {
+  right: 40px;
+  animation: subirDerecha 2.2s cubic-bezier(0.25, 1.5, 0.5, 1) forwards;
+  animation-delay: 0.8s;
+}
+
+@keyframes subirIzquierda {
+  0% {
+    opacity: 0;
+    transform: translateY(900px) scale(0.9) rotate(-6deg);
+  }
+  70% {
+    opacity: 1;
+    transform: translateY(-110px) scale(1.05) rotate(0deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(-90px) scale(1) rotate(0deg);
+  }
+}
+
+@keyframes subirDerecha {
+  0% {
+    opacity: 0;
+    transform: translateY(550px) scale(0.9) rotate(6deg);
+  }
+  70% {
+    opacity: 1;
+    transform: translateY(-110px) scale(1.05) rotate(0deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(-90px) scale(1) rotate(0deg);
+  }
+}
+
+.foto-nicole {
+  position: fixed;
+  bottom: 150px;
+  right: 350px;
+  width: 180px;
+  transform: rotate(10deg) scale(0.7);
+  border-radius: 12px;
+  box-shadow: 0px 8px 20px rgba(0,0,0,0.25); /* sombra suave */
+  transition: transform 0.4s;
+  
+}
+
+.foto-nicole:hover {
+  transform: rotate(10deg) scale(0.9); /* un mini zoom si pasa el mouse */
+}
+
+.foto-nicole-pc {
+  position: fixed;
+  bottom: 550px;   /* ajustá a tu gusto */
+  left: 150px;     /* ajustá a tu gusto */
+  transform: rotate(-10deg); /* toda la composición inclinada */
+  text-align: center;
+  width: 180px;
+  border-radius: 12px;
+  box-shadow: 0px 8px 20px rgba(0,0,0,0.25);
+  display: block;
+  margin: 0 auto;
+  transition: transform 0.4s;
+}
+
+.foto-nicole-pc:hover {
+  transform: scale(1.10); /* agranda sin romper la inclinación */
+}
+
+.texto-bajo {
+  position: fixed;
+  bottom: 490px;   /* ajustá a tu gusto */
+  left: 163px;
+  margin-top: 10px;
+  font-size: 1.2rem;
+  color: #b4005a;
+  font-weight: bold;
+  transform: rotate(-10deg); /* una inclinación sutil, estética */
+  opacity: 0;
+  animation: aparecer 1.5s ease forwards 0.5s;
+}
+
+@keyframes aparecer {
+  from { opacity: 0; transform: translateY(10px) rotate(-10deg); }
+  to   { opacity: 1; transform: translateY(0) rotate(-12deg); }
+}
+
+.frase-abajo {
+  position: fixed;
+  bottom: 40px;           /* altura desde abajo */
+  left: 50%;
+  transform: translateX(-50%);
+  
+  font-size: 1.5rem;
+  color: #b4005a;
+  font-style: italic;
+  font-weight: bold;
+
+  opacity: 0;             /* empieza invisible */
+  transition: opacity 1.5s ease; /* transición suave */
+}
+
+
+
+
+.petalo {
+  position: fixed;
+  top: -20px;
+  font-size: 25px;
+  opacity: 0.7;
+  animation: caer 6s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes caer {
+  0%   { transform: translateY(0) rotate(0deg); }
+  100% { transform: translateY(110vh) rotate(120deg); }
+}
+
+.latido {
+  animation: latir 1.8s infinite ease-in-out;
+}
+
+@keyframes latir {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.08); }
+  60%  { transform: scale(1); }
+  100% { transform: scale(1); }
+}
+
+
+
+/* ——— SOBRE ANIMADO (Pantalla 3) ——— */
+
+.envelope {
+	--duration: 1000ms;
+
+	--shadow-width: calc(var(--envelope-width) * 0.85);
+	--shadow-blur: 15px;
+
+	--envelope-width: 300px;
+	--envelope-height: 175px;
+	--envelope-clr-bg: #d14d44;
+	--envelope-clr-bg-side: #c24e46;
+	--envelope-clr-bg-bottom: #e15349;
+	--envelope-clr-bg-top: #d14d44;
+	--envelope-clr-txt: #fff;
+
+	--envelope-transform-hover: rotateY(180deg);
+	--evelope-rotate-delay: calc(var(--duration) / 1);
+	--evelope-rotate-delay-hover: 0ms;
+
+	--letter-clr-bg: #fff;
+	--letter-clr-text: #c0392b;
+	--letter-font-size: 1rem;
+	--letter-delay: 0ms;
+	--letter-delay-hover: calc(var(--duration) * 1.25);
+
+	--letter-height: calc(var(--envelope-height) - 2rem);
+	--letter-height-hover: calc(var(--envelope-height) * 2.5);
+
+	--fold-rotate: rotateX(0deg);
+	--fold-zindex-hover: 0;
+	--fold-rotate-hover: rotateX(180deg);
+	--fold-delay: calc(var(--duration) / 2);
+	--fold-delay-hover: calc(var(--duration) * .75);
+
+	position: relative;
+	height: var(--envelope-height);
+	width: var(--envelope-width);
+	perspective: 1000px;
+	cursor: pointer;
+}
+
+.envelope:hover {
+	--envelope-transform: var(--envelope-transform-hover, 0deg);
+	--evelope-rotate-delay: var(--evelope-rotate-delay-hover);
+	--shadow-transform: rotateY(180deg);
+	--fold-rotate: var(--fold-rotate-hover);
+	--fold-delay: var(--fold-delay-hover);
+	--fold-zindex: var(--fold-zindex-hover);
+	--letter-height: var(--letter-height-hover);
+	--letter-delay: var(--letter-delay-hover);
+}
+
+.envelope-inner {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	transition: var(--duration) ease-in-out;
+	transition-delay: var(--evelope-rotate-delay);
+	transform-style: preserve-3d;
+	transform: var(--envelope-transform);
+	display: grid;
+}
+
+.envelope-front,
+.envelope-back {
+	position: relative;
+	grid-area: 1/1;
+	width: 100%;
+	height: 100%;
+	background-color: var(--envelope-clr-bg);
+	backface-visibility: hidden;
+}
+
+.envelope-back {
+	transform: rotateY(180deg);
+}
+
+.envelope-back::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: 3;
+	background-image: conic-gradient(
+		transparent 60deg,
+		var(--envelope-clr-bg-side) 60deg 120deg,
+		var(--envelope-clr-bg-bottom) 120deg 240deg,
+		var(--envelope-clr-bg-side) 240deg 300deg,
+		transparent 300deg
+	);
+}
+
+.envelope-back .top-fold {
+	position: absolute;
+	inset: 0;
+	z-index: var(--fold-zindex, 10);
+	background-color: var(--envelope-clr-bg-top);
+	clip-path: polygon(0% 0%, 50% 55%, 100% 0%);
+	transform: var(--fold-rotate);
+	transform-origin: top;
+	transition: var(--duration) ease-in-out;
+	transition-delay: var(--fold-delay);
+}
+
+.letter {
+	position: absolute;
+	bottom: 5px;
+	left: 50%;
+	width: 260px;
+	height: var(--letter-height);
+	font-size: 1rem;
+	transform: translateX(-50%);
+	background: var(--letter-clr-bg);
+	z-index: 2;
+	padding: 1.5em 1.2em;
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	align-items: center;
+	text-align: center;
+	transition: var(--duration) ease-in-out;
+	transition-delay: var(--letter-delay);
+	overflow: hidden;
+}
+
+.custom-image {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+}
+
+.custom-image2 {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+}
+
+.highlight {
+    display: block;
+    margin-top: 10px;
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+/* Estilos para la foto de Santi (izquierda) */
+.foto-santi-izq {
+  position: fixed;
+  bottom: 500px;   /* ajustá a tu gusto */
+  left: 100px;     /* ajustá a tu gusto */
+  transform: rotate(-10deg) scale(1.35); /* toda la composición inclinada */
+  text-align: center;
+  width: 180px;
+  border-radius: 12px;
+  box-shadow: 0px 8px 20px rgba(0,0,0,0.25);
+  display: block;
+  margin: 0 auto;
+  transition: transform 0.4s;
+  
+}
+
+.foto-santi-izq:hover {
+  transform: scale(1.85);
+}
+
+/* Estilos para la foto de Santi azul (derecha) */
+.foto-santi-azul {
+  position: fixed;
+  bottom: 200px;   /* abajo a la derecha */
+  right: 200px;
+  transform: rotate(10deg) scale(1.35);
+  text-align: center;
+  width: 180px;
+  border-radius: 12px;
+  box-shadow: 0px 8px 20px rgba(0,0,0,0.25);
+  display: block;
+  margin: 0 auto;
+  transition: transform 0.4s;
+  cursor: pointer;
+}
+
+.foto-santi-azul:hover {
+  transform: scale(1.85);
+}
+
+/* Galería dentro del modal */
+.img-modal-gallery {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.img-modal-item {
+  display: none; /* solo se muestra la activa */
+  max-width: 95%;
+  max-height: 90vh;
+  border-radius: 6px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+  object-fit: contain;
+}
+
+.img-modal-item.active {
+  display: block;
+  animation: modal-img-in 360ms cubic-bezier(.2,.9,.3,1) forwards;
+}
+
+/* animación del modal (contenido) */
+.img-modal[aria-hidden="false"] .img-modal-content {
+  animation: modal-pop 320ms cubic-bezier(.2,.9,.3,1) forwards;
+}
+
+@keyframes modal-pop {
+  0% { opacity: 0; transform: translateY(8px) scale(.98); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes modal-img-in {
+  0% { opacity: 0; transform: scale(.96); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* Si la galería solo tiene una imagen, hacemos que ocupe más espacio */
+.img-modal-gallery.single .img-modal-item {
+  max-width: 90%;
+}
+
+/* Controles prev/next */
+.img-modal-prev,
+.img-modal-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.9);
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 16px;
+  font-size: 18px;
+  cursor: pointer;
+  z-index: 10003;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.img-modal-prev { left: 10px; }
+.img-modal-next { right: 10px; }
+
+/* Animación de salida para el modal */
+.img-modal.closing {
+  animation: modal-fade-out 260ms ease-in forwards;
+}
+
+@keyframes modal-fade-out {
+  0% { opacity: 1; transform: none; }
+  100% { opacity: 0; transform: translateY(6px) scale(.99); }
+}
+
+/* Clase para mostrar la foto ampliada (por ejemplo, togglear con JS) */
+.foto-santi-izq.enlarge {
+  position: fixed;
+  left: 50%;
+  top: 25%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  height: auto;
+  z-index: 9999;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+}
+
+/* --- Estilos del modal de imagen --- */
+.img-modal {
+  position: fixed;
+  inset: 0;
+  display: none; /* visible via atributo aria-hidden */
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+
+.img-modal[aria-hidden="false"] {
+  display: flex;
+}
+
+.img-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+}
+
+.img-modal-content {
+  position: relative;
+  max-width: 90%;
+  max-height: 90%;
+  z-index: 10001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  overflow: hidden;
+  background: transparent;
+}
+
+.img-modal-img {
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+  border-radius: 6px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+  object-fit: contain;
+}
+
+.img-modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 10002;
+  background: rgba(255,255,255,0.9);
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 18px;
+  font-size: 20px;
+  line-height: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 480px) {
+  .img-modal-close { top: 6px; right: 6px; width: 32px; height: 32px; }
+  .img-modal-content { max-width: 95%; max-height: 85%; }
+}
+

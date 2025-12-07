@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Feliz Cumpleaños Nicole</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Pantalla 1 -->
+  <div id="pantalla1" class="pantalla activa">
+    <h1>¡Feliz Cumpleaños Nicole!</h1>
+    <button id="btnIniciar">Iniciar</button>
+    <div class="flores">
+      </div>
+</div>
+
+  </div>
+
+  <!-- Pantalla 2 -->
+  <div id="pantalla2" class="pantalla">
+    <h1 class="latido"><i><u>¡Te amo!</u></i></h1>
+    <button id="btnJuego">Juego</button>
+    <button id="btnCarta">Carta</button>
+    <button id="btnGalería" onclick="window.location.href='galeria.html'">Galería</button>
+    <img src="imagenes/nicole.png" class="foto-nicole" alt="Foto de Nicole">
+    <div class="foto-izquierda">
+    <img src="imagenes/nicolefondo.jpeg" class="foto-nicole-pc" alt="Foto en PC">
+    </div>
+    
+    <p class="texto-bajo">Siempre te llevo conmigo</p>
+    </div>
+    <img src="imagenes/ramo izquierda.png" class="flor flor-izquierda" alt="Flores izquierda">
+    <img src="imagenes/ramo derecha.png" class="flor flor-derecha">
+    <p id="frase-escrita" class="frase-abajo"></p>
+    
+  </div>
+
+  <!-- Pantalla 3: Carta final -->
+
+<div id="pantalla3" class="pantalla">
+    <div class="envelope">
+
+        <div class="envelope-inner">
+
+            <div class="envelope-front">
+
+                <div class="postage-stamp ">
+                    <!-- Podés borrar el sello si querés -->
+                </div>
+
+                <div class="address">
+                    <p><span>Para:</span> <span>Nicole</span></p>
+                    <p><span>De:</span> <span>Santino</span></p>
+                </div>
+
+            </div>
+
+            <div class="envelope-back">
+                <div class="top-fold"></div>
+
+                <div class="letter">
+                    <img src="https://img.freepik.com/vector-premium/pulgar-dedos-imprimir-marca-huella-dactilar-amor-corazon_53500-1839.jpg" alt="love1" class="custom-image">
+
+                    <p>Cuanto más estoy con vos… <span class="highlight">más te amo.</span></p>
+
+                    <img src="https://img.freepik.com/fotos-premium/imagen-flores-amarillas-palabras-sol-citadas-ella_1191871-60686.jpg" alt="love2" class="custom-image2">
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <img src="imagenes/santi/santi1.jpeg" class = "foto-santi-izq" alt = "Foto santi izq">
+    <img src="imagenes/santi/santi2.jpeg" class = "foto-santi-azul" alt = "Foto santi azul">
+    
+</div>
+
+
+  <!-- Modal para imagen (colocado por el asistente) -->
+  <div id="img-modal" class="img-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="img-modal-title">
+    <div class="img-modal-backdrop" data-close="backdrop"></div>
+    <div class="img-modal-content" role="document">
+      <button class="img-modal-close" aria-label="Cerrar imagen" data-close="button">&times;</button>
+      <button class="img-modal-prev" aria-label="Anterior">&#10094;</button>
+      <div class="img-modal-gallery" aria-live="polite"></div>
+      <button class="img-modal-next" aria-label="Siguiente">&#10095;</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <div class="petalos"></div>
+  
+</body>
+</html>
