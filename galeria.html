@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8"  >
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"  >
-  <title>  - Feliz Cumpleaños Nicole< title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Galería - Feliz Cumpleaños Nicole</title>
+
   <style>
     * {
       margin: 0;
@@ -39,7 +40,7 @@
       pointer-events: none;
     }
 
-     * transición para desaparecer el texto después de unos segundos * 
+    /* transición */
     .galeria-text.fadeout {
       opacity: 0;
       transform: translate(-50%, -70%);
@@ -74,13 +75,6 @@
       z-index: 100;
     }
 
-    .back-button:hover {
-      background-color: white;
-      transform: scale(1.1);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    }
-
-     * Controles para el image-trail * 
     .controls {
       position: fixed;
       bottom: 18px;
@@ -93,23 +87,8 @@
       background: rgba(255,255,255,0.06);
       padding: 8px 12px;
       border-radius: 14px;
-      backdrop-filter: blur(6px);
     }
 
-    .controls button {
-      padding: 8px 12px;
-      border-radius: 10px;
-      border: none;
-      cursor: pointer;
-      background: rgba(255,255,255,0.9);
-      color: #764ba2;
-      font-weight: 600;
-    }
-
-    .controls label { color: white; font-size: 0.9rem; display: flex; gap:8px; align-items:center; }
-
-
-     * Image trail * 
     .trail-image {
       position: fixed;
       pointer-events: none;
@@ -117,32 +96,24 @@
       border-radius: 8px;
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
     }
-  < style>
-< head>
-<body>
-  <button class="back-button" onclick="window.history.back()">← Volver< button>
-  <!-- Controles: Pausa Reanudar, Frecuencia (ms) y Tamaño -->
-  <div class="controls" aria-hidden="false">
-    <button id="toggleTrail">Pausar< button>
-    <label>Frecuencia
-      <input id="freq" type="range" min="20" max="300" value="50">
-    < label>
-    <label>Tamaño
-      <input id="size" type="range" min="0.5" max="2" step="0.1" value="1">
-    < label>
-  < div>
-  
-  <div class="container">
-    <div class="galeria-text">
-      <h1>🎀   de Fotos 🎀< h1>
-      <p>¡Mové el cursor para ver la magia jiji!< p>
-    < div>
-  < div>
+  </style>
+</head>
 
-  <script>
-       Array de imágenes de la  
-    const images = [
-      'nicole.png',
+<body>
+
+<button class="back-button" onclick="window.history.back()">← Volver</button>
+
+<div class="container">
+  <div class="galeria-text">
+    <h1>🎀 Galería de Fotos 🎀</h1>
+    <p>¡Mové el cursor para ver la magia!</p>
+  </div>
+</div>
+
+<script>
+  // Array de imágenes (TU LISTA ORIGINAL)
+  const images = [
+    'nicole.png',
       'nicolefondo.jpeg',
       'santi1.jpeg',
       'santi2.jpeg',
@@ -427,128 +398,36 @@
       'PHOTO-2025-11-08-20-40-53.jpg',
       'PHOTO-2025-11-10-15-14-35.jpg' ,
       'PHOTO-2025-11-10-18-46-55.jpg'
-      
-    ];
+  ];
 
-    let mouseX = 0;
-    let mouseY = 0;
-    const trailElements = [];
   let lastTrailTime = 0;
-  let trailDelay = 50;    milisegundos entre cada imagen (ajustable)
-  let paused = false;
-  let sizeMultiplier = 1;
+  let delay = 80;
 
-       Precargar imágenes
-    images.forEach(src => {
-      const img = new Image();
-      img.src = src;
-    });
+  setTimeout(() => {
+    const txt = document.querySelector('.galeria-text');
+    if (txt) txt.classList.add('fadeout');
+  }, 3000);
 
-       Ocultar el texto central después de ~3 segundos
-    setTimeout(() => {
-      const txt = document.querySelector('.galeria-text');
-      if (txt) txt.classList.add('fadeout');
-    }, 3000);
+  document.addEventListener('mousemove', (e) => {
+    const now = Date.now();
+    if (now - lastTrailTime < delay) return;
+    lastTrailTime = now;
 
-       Controles: Pausa Reanudar y sliders
-    const toggleBtn = document.getElementById('toggleTrail');
-    const freqInput = document.getElementById('freq');
-    const sizeInput = document.getElementById('size');
+    const img = document.createElement('img');
+    img.src = images[Math.floor(Math.random() * images.length)];
+    img.className = 'trail-image';
+    img.style.left = e.clientX + 'px';
+    img.style.top = e.clientY + 'px';
+    img.style.width = '120px';
 
-    if (freqInput) {
-      trailDelay = Number(freqInput.value);
-      freqInput.addEventListener('input', (e) => {
-        trailDelay = Number(e.target.value);
-      });
-    }
+    document.body.appendChild(img);
+    setTimeout(() => img.remove(), 1000);
+  });
 
-    if (sizeInput) {
-      sizeMultiplier = Number(sizeInput.value);
-      sizeInput.addEventListener('input', (e) => {
-        sizeMultiplier = Number(e.target.value);
-      });
-    }
+  if (/Mobi|Android/i.test(navigator.userAgent)) {
+    delay = 140;
+  }
+</script>
 
-    if (toggleBtn) {
-      toggleBtn.addEventListener('click', () => {
-        paused = !paused;
-        toggleBtn.textContent = paused ? 'Reanudar' : 'Pausar';
-      });
-    }
-
-       Ajustes para móviles: valores por defecto más suaves
-    if ( Mobi|Android i.test(navigator.userAgent)) {
-      if (freqInput) { freqInput.value = Math.max(120, Number(freqInput.value)); trailDelay = Number(freqInput.value); }
-      if (sizeInput) { sizeInput.value = Math.min(1.1, Number(sizeInput.value)); sizeMultiplier = Number(sizeInput.value); }
-    }
-
-       Crear elemento de trailing de imagen
-    function createTrailImage(x, y) {
-      const trailImg = document.createElement('img');
-      trailImg.src = images[Math.floor(Math.random() * images.length)];
-      trailImg.className = 'trail-image';
-      trailImg.style.left = x + 'px';
-      trailImg.style.top = y + 'px';
-       tamaños base: entre 80px y 160px, multiplicado por el factor de tamaño
-    const base = 80 + Math.random() * 80;    80 - 160
-    trailImg.style.width = Math.round(base * sizeMultiplier) + 'px';
-      trailImg.style.height = 'auto';
-      trailImg.style.animation = 'fadeOut 1s ease-out forwards';
-
-      document.body.appendChild(trailImg);
-      trailElements.push(trailImg);
-
-         Eliminar elemento después de la animación
-      setTimeout(() => {
-        trailImg.remove();
-        trailElements.splice(trailElements.indexOf(trailImg), 1);
-      }, 1000);
-    }
-
-       Event listener para movimiento del ratón
-    document.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-
-      const currentTime = Date.now();
-      if (!paused && (currentTime - lastTrailTime > trailDelay)) {
-        createTrailImage(mouseX - 30, mouseY - 30);
-        lastTrailTime = currentTime;
-      }
-    });
-
-       Soporte touch para móviles (movimiento del dedo)
-    document.addEventListener('touchmove', (e) => {
-      const t = e.touches[0];
-      if (!t) return;
-      mouseX = t.clientX;
-      mouseY = t.clientY;
-      const currentTime = Date.now();
-      if (!paused && (currentTime - lastTrailTime > trailDelay)) {
-        createTrailImage(mouseX - 30, mouseY - 30);
-        lastTrailTime = currentTime;
-      }
-    }, { passive: true });
-
-       Agregar animación CSS dinámicamente
-    const style = document.createElement('style');
-    style.textContent = `
-      @keyframes fadeOut {
-        0% {
-          opacity: 0.8;
-          transform: scale(1) rotate(0deg);
-        }
-        50% {
-          transform: scale(1.1) rotate(5deg);
-        }
-        100% {
-          opacity: 0;
-          transform: scale(0.5) rotate(10deg) translateY(-30px);
-        }
-      }
-    `;
-    document.head.appendChild(style);
-  < script>
-< body>
-< html>
-
+</body>
+</html>
