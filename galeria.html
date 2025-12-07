@@ -1,10 +1,9 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Feliz Cumpleaños Nicole</title>
-
+  <meta charset="UTF-8"  >
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"  >
+  <title>  - Feliz Cumpleaños Nicole< title>
   <style>
     * {
       margin: 0;
@@ -40,7 +39,7 @@
       pointer-events: none;
     }
 
-    /* transición para desaparecer el texto */
+     * transición para desaparecer el texto después de unos segundos * 
     .galeria-text.fadeout {
       opacity: 0;
       transform: translate(-50%, -70%);
@@ -75,6 +74,13 @@
       z-index: 100;
     }
 
+    .back-button:hover {
+      background-color: white;
+      transform: scale(1.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+     * Controles para el image-trail * 
     .controls {
       position: fixed;
       bottom: 18px;
@@ -84,74 +90,464 @@
       display: flex;
       gap: 12px;
       align-items: center;
+      background: rgba(255,255,255,0.06);
+      padding: 8px 12px;
+      border-radius: 14px;
+      backdrop-filter: blur(6px);
     }
 
+    .controls button {
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      background: rgba(255,255,255,0.9);
+      color: #764ba2;
+      font-weight: 600;
+    }
+
+    .controls label { color: white; font-size: 0.9rem; display: flex; gap:8px; align-items:center; }
+
+
+     * Image trail * 
     .trail-image {
       position: fixed;
       pointer-events: none;
       opacity: 0.8;
       border-radius: 8px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
     }
-  </style>
-</head>
-
+  < style>
+< head>
 <body>
+  <button class="back-button" onclick="window.history.back()">← Volver< button>
+  <!-- Controles: Pausa Reanudar, Frecuencia (ms) y Tamaño -->
+  <div class="controls" aria-hidden="false">
+    <button id="toggleTrail">Pausar< button>
+    <label>Frecuencia
+      <input id="freq" type="range" min="20" max="300" value="50">
+    < label>
+    <label>Tamaño
+      <input id="size" type="range" min="0.5" max="2" step="0.1" value="1">
+    < label>
+  < div>
+  
+  <div class="container">
+    <div class="galeria-text">
+      <h1>🎀   de Fotos 🎀< h1>
+      <p>¡Mové el cursor para ver la magia jiji!< p>
+    < div>
+  < div>
 
-<button class="back-button" onclick="window.history.back()">← Volver</button>
+  <script>
+       Array de imágenes de la  
+    const images = [
+      'nicole.png',
+      'nicolefondo.jpeg',
+      'santi1.jpeg',
+      'santi2.jpeg',
+      'PHOTO-2025-04-10-13-31-27.jpg',
+      'PHOTO-2025-04-10-14-10-03.jpg',
+      'PHOTO-2025-04-10-14-10-04.jpg', 
+      'PHOTO-2025-04-10-14-12-18.jpg',
+      'PHOTO-2025-04-10-14-22-06.jpg' ,
+      'PHOTO-2025-04-10-14-30-16.jpg' ,
+      'PHOTO-2025-04-10-15-38-26.jpg' ,
+      'PHOTO-2025-04-10-15-38-26(1).jpg', 
+      'PHOTO-2025-04-10-15-38-27.jpg' ,
+      'PHOTO-2025-04-10-15-38-27(1).jpg', 
+      'PHOTO-2025-04-10-15-38-28.jpg' ,
+      'PHOTO-2025-04-10-15-38-28(1).jpg', 
+      'PHOTO-2025-04-10-15-38-28(2).jpg',
+      'PHOTO-2025-04-10-15-38-29.jpg',
+      'PHOTO-2025-04-10-15-38-29(1).jpg', 
+      'PHOTO-2025-04-10-15-38-30.jpg' ,
+      'PHOTO-2025-04-10-15-38-30(1).jpg', 
+      'PHOTO-2025-04-10-15-38-30(2).jpg' ,
+      'PHOTO-2025-04-10-15-38-31.jpg' ,
+      'PHOTO-2025-04-12-14-46-08.jpg' ,
+      'PHOTO-2025-04-15-20-49-11.jpg' ,
+      'PHOTO-2025-04-16-12-58-28.jpg' ,
+      'PHOTO-2025-04-16-12-58-36.jpg' ,
+      'PHOTO-2025-04-17-15-40-12.jpg' ,
+      'PHOTO-2025-04-19-17-24-53.jpg' ,
+      'PHOTO-2025-04-19-22-06-51.jpg' ,
+      'PHOTO-2025-04-23-07-35-39.jpg' ,
+      'PHOTO-2025-04-23-09-27-13.jpg' ,
+      'PHOTO-2025-04-23-19-41-28.jpg' ,
+      'PHOTO-2025-04-25-18-59-12.jpg' ,
+      'PHOTO-2025-04-28-07-27-46.jpg' ,
+      'PHOTO-2025-04-28-23-01-46.jpg' ,
+      'PHOTO-2025-04-29-20-15-40.jpg' ,
+      'PHOTO-2025-05-05-22-09-18.jpg' ,
+      'PHOTO-2025-05-07-18-10-23.jpg' ,
+      'PHOTO-2025-05-08-20-29-10.jpg' ,
+      'PHOTO-2025-05-10-15-33-20.jpg' ,
+      'PHOTO-2025-05-12-21-22-53.jpg' ,
+      'PHOTO-2025-05-21-14-45-40.jpg' ,
+      'PHOTO-2025-05-21-14-47-54.jpg' ,
+      'PHOTO-2025-05-22-16-01-40.jpg' ,
+      'PHOTO-2025-05-22-21-56-54.jpg' ,
+      'PHOTO-2025-05-22-21-56-54(1).jpg', 
+      'PHOTO-2025-05-22-22-01-18.jpg' ,
+      'PHOTO-2025-05-22-22-01-19.jpg' ,
+      'PHOTO-2025-05-23-07-28-18.jpg' ,
+      'PHOTO-2025-05-24-17-11-53.jpg' ,
+      'PHOTO-2025-05-24-21-40-18.jpg' ,
+      'PHOTO-2025-05-26-09-23-04.jpg' ,
+      'PHOTO-2025-05-27-13-50-43.jpg' ,
+      'PHOTO-2025-05-27-16-08-38.jpg' ,
+      'PHOTO-2025-05-27-16-16-42.jpg' ,
+      'PHOTO-2025-05-28-10-59-22.jpg' ,
+      'PHOTO-2025-05-28-14-05-32.jpg' ,
+      'PHOTO-2025-05-28-22-26-20.jpg' ,
+      'PHOTO-2025-05-28-22-33-56.jpg' ,
+      'PHOTO-2025-05-29-18-46-32.jpg' ,
+      'PHOTO-2025-05-29-22-03-06.jpg' ,
+      'PHOTO-2025-05-29-22-05-00.jpg' ,
+      'PHOTO-2025-05-30-13-08-41.jpg' ,
+      'PHOTO-2025-05-30-18-37-54.jpg' ,
+      'PHOTO-2025-05-31-15-00-32.jpg' ,
+      'PHOTO-2025-05-31-17-38-17.jpg' ,
+      'PHOTO-2025-05-31-17-38-17(1).jpg', 
+      'PHOTO-2025-06-02-07-34-27.jpg' ,
+      'PHOTO-2025-06-02-12-08-43.jpg' ,
+      'PHOTO-2025-06-02-13-03-23.jpg' ,
+      'PHOTO-2025-06-03-18-15-01.jpg' ,
+      'PHOTO-2025-06-05-07-15-42.jpg' ,
+      'PHOTO-2025-06-05-10-03-11.jpg' ,
+      'PHOTO-2025-06-07-21-24-34.jpg' ,
+      'PHOTO-2025-06-08-10-20-34.jpg' ,
+      'PHOTO-2025-06-08-16-05-48.jpg',
+      'PHOTO-2025-06-08-17-02-50.jpg',
+      'PHOTO-2025-06-09-20-04-48.jpg',
+      'PHOTO-2025-06-09-22-31-58.jpg' ,
+      'PHOTO-2025-06-11-07-25-06.jpg' ,
+      'PHOTO-2025-06-11-09-06-43.jpg' ,
+      'PHOTO-2025-06-12-11-37-24.jpg' ,
+      'PHOTO-2025-06-12-17-52-04.jpg' ,
+      'PHOTO-2025-06-13-00-21-52.jpg' ,
+      'PHOTO-2025-06-13-18-43-04.jpg' ,
+      'PHOTO-2025-06-14-13-26-27.jpg' ,
+      'PHOTO-2025-06-14-22-22-22.jpg' ,
+      'PHOTO-2025-06-15-19-55-05.jpg' ,
+      'PHOTO-2025-06-16-14-44-19.jpg' ,
+      'PHOTO-2025-06-16-16-33-41.jpg' ,
+      'PHOTO-2025-06-17-15-27-02.jpg' ,
+      'PHOTO-2025-06-19-16-21-43.jpg' ,
+      'PHOTO-2025-06-20-10-43-21.jpg' ,
+      'PHOTO-2025-06-20-15-02-33.jpg' ,
+      'PHOTO-2025-06-21-17-26-54.jpg',
+      'PHOTO-2025-06-21-17-38-59.jpg',
+      'PHOTO-2025-06-24-16-09-07.jpg' ,
+      'PHOTO-2025-06-26-12-48-34.jpg' ,
+      'PHOTO-2025-06-28-10-59-04.jpg' ,
+      'PHOTO-2025-06-28-14-49-47.jpg' ,
+      'PHOTO-2025-07-04-17-11-20.jpg' ,
+      'PHOTO-2025-07-04-18-42-31.jpg' ,
+      'PHOTO-2025-07-04-21-32-33.jpg' ,
+      'PHOTO-2025-07-05-15-29-40.jpg' ,
+      'PHOTO-2025-07-05-15-29-41.jpg' ,
+      'PHOTO-2025-07-06-00-32-27.jpg' ,
+      'PHOTO-2025-07-06-19-46-26.jpg' ,
+      'PHOTO-2025-07-06-20-07-12.jpg' ,
+      'PHOTO-2025-07-09-12-38-46.jpg' ,
+      'PHOTO-2025-07-11-18-42-58.jpg' ,
+      'PHOTO-2025-07-11-21-29-08.jpg' ,
+      'PHOTO-2025-07-17-10-11-59.jpg',
+      'PHOTO-2025-07-17-11-15-41.jpg' ,
+      'PHOTO-2025-07-17-20-12-35.jpg' ,
+      'PHOTO-2025-07-18-22-02-11.jpg' ,
+      'PHOTO-2025-07-18-22-30-12.jpg' ,
+      'PHOTO-2025-07-18-22-30-14.jpg' ,
+      'PHOTO-2025-07-19-01-39-07.jpg' ,
+      'PHOTO-2025-07-19-09-04-42.jpg' ,
+      'PHOTO-2025-07-19-22-28-28.jpg',
+      'PHOTO-2025-07-20-00-25-13.jpg' ,
+      'PHOTO-2025-07-20-00-52-10.jpg' ,
+      'PHOTO-2025-07-20-16-40-36.jpg' ,
+      'PHOTO-2025-07-20-18-54-25.jpg' ,
+      'PHOTO-2025-07-21-21-38-06.jpg' ,
+      'PHOTO-2025-07-22-18-39-04.jpg' ,
+      'PHOTO-2025-07-24-22-08-05.jpg' ,
+      'PHOTO-2025-07-24-22-08-24.jpg' ,
+      'PHOTO-2025-07-24-22-27-25.jpg' ,
+      'PHOTO-2025-07-26-17-06-00.jpg',
+      'PHOTO-2025-07-28-11-33-00.jpg' ,
+      'PHOTO-2025-07-28-16-13-43.jpg' ,
+      'PHOTO-2025-07-30-13-41-32.jpg' ,
+      'PHOTO-2025-07-30-18-36-47.jpg' ,
+      'PHOTO-2025-07-30-23-10-34.jpg' ,
+      'PHOTO-2025-07-31-00-45-15.jpg' ,
+      'PHOTO-2025-07-31-00-52-54.jpg' ,
+      'PHOTO-2025-08-01-00-27-11.jpg' ,
+      'PHOTO-2025-08-01-13-07-25.jpg' ,
+      'PHOTO-2025-11-11-20-58-36.jpg',
+      'PHOTO-2025-08-04-16-32-01.jpg' ,
+      'PHOTO-2025-08-04-18-49-06.jpg' ,
+      'PHOTO-2025-08-06-19-32-28.jpg' ,
+      'PHOTO-2025-08-08-07-28-27.jpg' ,
+      'PHOTO-2025-08-09-10-13-36.jpg' ,
+      'PHOTO-2025-08-18-21-26-14.jpg' ,
+      'PHOTO-2025-08-18-21-26-15.jpg' ,
+      'PHOTO-2025-08-23-16-32-29.jpg' ,
+      'PHOTO-2025-08-28-14-25-26.jpg' ,
+      'PHOTO-2025-08-28-17-15-20.jpg' ,
+      'PHOTO-2025-08-28-17-18-21.jpg' ,
+      'PHOTO-2025-08-28-17-18-21(1).jpg', 
+      'PHOTO-2025-08-28-17-18-21(2).jpg' ,
+      'PHOTO-2025-08-28-17-18-21(3).jpg' ,
+      'PHOTO-2025-08-28-17-18-21(4).jpg' ,
+      'PHOTO-2025-08-28-17-53-45.jpg' ,
+      'PHOTO-2025-08-29-13-32-10.jpg' ,
+      'PHOTO-2025-08-29-18-49-52.jpg' ,
+      'PHOTO-2025-08-29-21-38-21.jpg' ,
+      'PHOTO-2025-09-01-14-50-15.jpg' ,
+      'PHOTO-2025-09-02-14-12-44.jpg' ,
+      'PHOTO-2025-09-02-16-22-39.jpg' ,
+      'PHOTO-2025-09-04-21-06-23.jpg' ,
+      'PHOTO-2025-09-06-11-23-34.jpg' ,
+      'PHOTO-2025-09-06-19-08-03.jpg' ,
+      'PHOTO-2025-09-09-09-19-40.jpg' ,
+      'PHOTO-2025-09-09-18-50-28.jpg' ,
+      'PHOTO-2025-09-10-16-41-21.jpg' ,
+      'PHOTO-2025-09-11-18-43-25.jpg' ,
+      'PHOTO-2025-09-12-18-36-35.jpg' ,
+      'PHOTO-2025-09-13-10-43-28.jpg' ,
+      'PHOTO-2025-09-13-11-24-59.jpg' ,
+      'PHOTO-2025-09-13-11-56-31.jpg' ,
+      'PHOTO-2025-09-14-12-24-54.jpg' ,
+      'PHOTO-2025-09-15-00-05-22.jpg' ,
+      'PHOTO-2025-09-16-16-29-02.jpg' ,
+      'PHOTO-2025-09-16-16-29-02(1).jpg',
+      'PHOTO-2025-09-16-16-29-03.jpg' ,
+      'PHOTO-2025-09-16-16-29-03(1).jpg', 
+      'PHOTO-2025-09-16-16-29-03(2).jpg' ,
+      'PHOTO-2025-09-16-16-29-04.jpg' ,
+      'PHOTO-2025-09-16-16-32-51.jpg' ,
+      'PHOTO-2025-09-16-17-39-31.jpg' ,
+      'PHOTO-2025-09-18-18-44-12.jpg' ,
+      'PHOTO-2025-09-18-20-33-05.jpg' ,
+      'PHOTO-2025-09-18-20-33-05(1).jpg', 
+      'PHOTO-2025-09-19-13-49-36.jpg' ,
+      'PHOTO-2025-09-19-18-42-36.jpg' ,
+      'PHOTO-2025-09-20-15-44-33.jpg' ,
+      'PHOTO-2025-09-21-10-26-28.jpg' ,
+      'PHOTO-2025-09-21-16-54-29.jpg' ,
+      'PHOTO-2025-09-23-13-14-27.jpg' ,
+      'PHOTO-2025-09-23-13-54-49.jpg' ,
+      'PHOTO-2025-09-23-18-31-05.jpg' ,
+      'PHOTO-2025-09-24-08-09-10.jpg' ,
+      'PHOTO-2025-09-24-15-52-21.jpg' ,
+      'PHOTO-2025-09-25-12-59-49.jpg' ,
+      'PHOTO-2025-09-25-16-36-30.jpg' ,
+      'PHOTO-2025-09-28-10-59-17.jpg' ,
+      'PHOTO-2025-10-01-07-29-53.jpg' ,
+      'PHOTO-2025-10-01-07-29-53(1).jpg', 
+      'PHOTO-2025-10-01-07-29-53(2).jpg' ,
+      'PHOTO-2025-10-01-07-29-53(3).jpg' ,
+      'PHOTO-2025-10-01-07-29-53(4).jpg' ,
+      'PHOTO-2025-10-01-07-29-53(5).jpg' ,
+      'PHOTO-2025-10-01-21-01-11.jpg' ,
+      'PHOTO-2025-10-01-21-05-26.jpg',
+      'PHOTO-2025-10-02-13-47-20.jpg' ,
+      'PHOTO-2025-10-02-17-58-27.jpg' ,
+      'PHOTO-2025-10-03-13-13-10.jpg' ,
+      'PHOTO-2025-10-03-14-41-01.jpg' ,
+      'PHOTO-2025-10-03-19-14-27.jpg' ,
+      'PHOTO-2025-10-04-12-32-48.jpg' ,
+      'PHOTO-2025-10-05-16-22-06.jpg' ,
+      'PHOTO-2025-10-06-21-52-38.jpg' ,
+      'PHOTO-2025-10-09-18-46-23.jpg' ,
+      'PHOTO-2025-10-09-21-08-18.jpg',
+      'PHOTO-2025-10-09-21-57-20.jpg',
+      'PHOTO-2025-10-10-16-57-38.jpg' ,
+      'PHOTO-2025-10-11-10-09-29.jpg' ,
+      'PHOTO-2025-10-11-10-09-29(1).jpg',
+      'PHOTO-2025-10-11-10-09-30.jpg' ,
+      'PHOTO-2025-10-11-10-09-30(1).jpg', 
+      'PHOTO-2025-10-11-10-09-30(2).jpg' ,
+      'PHOTO-2025-10-11-10-09-31.jpg' ,
+      'PHOTO-2025-10-12-13-25-16.jpg' ,
+      'PHOTO-2025-10-14-18-52-12.jpg' ,
+      'PHOTO-2025-10-16-13-55-19.jpg' ,
+      'PHOTO-2025-10-17-14-55-17.jpg' ,
+      'PHOTO-2025-10-17-18-44-18.jpg' ,
+      'PHOTO-2025-10-17-22-06-18.jpg',
+      'PHOTO-2025-10-18-08-50-35.jpg',
+      'PHOTO-2025-10-18-09-00-34.jpg' ,
+      'PHOTO-2025-10-18-11-53-51.jpg' ,
+      'PHOTO-2025-10-18-19-14-40.jpg' ,
+      'PHOTO-2025-10-18-19-26-22.jpg' ,
+      'PHOTO-2025-10-18-19-30-43.jpg',
+      'PHOTO-2025-10-19-21-25-32.jpg',
+      'PHOTO-2025-10-20-17-17-16.jpg' ,
+      'PHOTO-2025-10-20-18-41-40.jpg' ,
+      'PHOTO-2025-10-22-13-41-34.jpg' ,
+      'PHOTO-2025-10-22-15-41-21.jpg' ,
+      'PHOTO-2025-10-23-01-09-43.jpg' ,
+      'PHOTO-2025-10-23-01-09-44.jpg' ,
+      'PHOTO-2025-10-23-01-18-48.jpg' ,
+      'PHOTO-2025-10-23-18-45-12.jpg' ,
+      'PHOTO-2025-10-23-21-40-46.jpg' ,
+      'PHOTO-2025-10-24-18-42-06.jpg' ,
+      'PHOTO-2025-10-24-18-45-15.jpg' ,
+      'PHOTO-2025-10-24-21-21-38.jpg' ,
+      'PHOTO-2025-10-24-21-27-37.jpg' ,
+      'PHOTO-2025-10-24-21-27-37(1).jpg', 
+      'PHOTO-2025-10-24-21-27-37(2).jpg' ,
+      'PHOTO-2025-10-24-21-29-45.jpg' ,
+      'PHOTO-2025-10-25-20-27-44.jpg' ,
+      'PHOTO-2025-10-26-13-16-39.jpg' ,
+      'PHOTO-2025-10-26-21-08-36.jpg' ,
+      'PHOTO-2025-10-26-21-09-13.jpg' ,
+      'PHOTO-2025-10-28-07-32-01.jpg' ,
+      'PHOTO-2025-10-28-09-19-57.jpg',
+      'PHOTO-2025-10-28-11-42-40.jpg',
+      'PHOTO-2025-10-28-12-44-26.jpg' ,
+      'PHOTO-2025-10-29-07-28-30.jpg' ,
+      'PHOTO-2025-10-29-13-45-50.jpg' ,
+      'PHOTO-2025-10-29-15-18-12.jpg' ,
+      'PHOTO-2025-10-29-15-18-12(1).jpg', 
+      'PHOTO-2025-10-31-07-55-50.jpg' ,
+      'PHOTO-2025-10-31-11-23-37.jpg' ,
+      'PHOTO-2025-11-02-11-37-45.jpg' ,
+      'PHOTO-2025-11-03-10-04-33.jpg' ,
+      'PHOTO-2025-11-03-13-21-59.jpg' ,
+      'PHOTO-2025-11-03-19-25-21.jpg' ,
+      'PHOTO-2025-11-04-11-34-14.jpg' ,
+      'PHOTO-2025-11-04-22-35-52.jpg' ,
+      'PHOTO-2025-11-05-06-49-55.jpg' ,
+      'PHOTO-2025-11-06-14-20-14.jpg' ,
+      'PHOTO-2025-11-06-17-43-25.jpg' ,
+      'PHOTO-2025-11-06-17-50-57.jpg' ,
+      'PHOTO-2025-11-07-12-03-31.jpg' ,
+      'PHOTO-2025-11-07-12-04-12.jpg' ,
+      'PHOTO-2025-11-08-15-45-43.jpg' ,
+      'PHOTO-2025-11-08-20-40-53.jpg',
+      'PHOTO-2025-11-10-15-14-35.jpg' ,
+      'PHOTO-2025-11-10-18-46-55.jpg'
+      
+    ];
 
-<div class="container">
-  <div class="galeria-text">
-    <h1>🎀 Galería de Fotos 🎀</h1>
-    <p>¡Mové el cursor para ver la magia jiji!</p>
-  </div>
-</div>
+    let mouseX = 0;
+    let mouseY = 0;
+    const trailElements = [];
+  let lastTrailTime = 0;
+  let trailDelay = 50;    milisegundos entre cada imagen (ajustable)
+  let paused = false;
+  let sizeMultiplier = 1;
 
-<script>
-// Array de imágenes
-const images = [
-  'nicole.png',
-  'nicolefondo.jpeg',
-  'santi1.jpeg',
-  'santi2.jpeg',
-  'PHOTO-2025-04-10-13-31-27.jpg',
-  'PHOTO-2025-04-10-14-10-03.jpg'
-  /* tu lista continúa igual, NO LA BORRES */
-];
+       Precargar imágenes
+    images.forEach(src => {
+      const img = new Image();
+      img.src = src;
+    });
 
-let lastTrailTime = 0;
-let trailDelay = 50;
-let paused = false;
-let sizeMultiplier = 1;
+       Ocultar el texto central después de ~3 segundos
+    setTimeout(() => {
+      const txt = document.querySelector('.galeria-text');
+      if (txt) txt.classList.add('fadeout');
+    }, 3000);
 
-// Ocultar texto
-setTimeout(() => {
-  const txt = document.querySelector('.galeria-text');
-  if (txt) txt.classList.add('fadeout');
-}, 3000);
+       Controles: Pausa Reanudar y sliders
+    const toggleBtn = document.getElementById('toggleTrail');
+    const freqInput = document.getElementById('freq');
+    const sizeInput = document.getElementById('size');
 
-// Movimiento del mouse
-document.addEventListener('mousemove', (e) => {
-  const now = Date.now();
-  if (paused || now - lastTrailTime < trailDelay) return;
-  lastTrailTime = now;
+    if (freqInput) {
+      trailDelay = Number(freqInput.value);
+      freqInput.addEventListener('input', (e) => {
+        trailDelay = Number(e.target.value);
+      });
+    }
 
-  const img = document.createElement('img');
-  img.src = images[Math.floor(Math.random() * images.length)];
-  img.className = 'trail-image';
-  img.style.left = e.clientX + 'px';
-  img.style.top = e.clientY + 'px';
-  img.style.width = (100 * sizeMultiplier) + 'px';
+    if (sizeInput) {
+      sizeMultiplier = Number(sizeInput.value);
+      sizeInput.addEventListener('input', (e) => {
+        sizeMultiplier = Number(e.target.value);
+      });
+    }
 
-  document.body.appendChild(img);
-  setTimeout(() => img.remove(), 1000);
-});
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', () => {
+        paused = !paused;
+        toggleBtn.textContent = paused ? 'Reanudar' : 'Pausar';
+      });
+    }
 
-// Móvil
-if (/Mobi|Android/i.test(navigator.userAgent)) {
-  trailDelay = 120;
-}
-</script>
+       Ajustes para móviles: valores por defecto más suaves
+    if ( Mobi|Android i.test(navigator.userAgent)) {
+      if (freqInput) { freqInput.value = Math.max(120, Number(freqInput.value)); trailDelay = Number(freqInput.value); }
+      if (sizeInput) { sizeInput.value = Math.min(1.1, Number(sizeInput.value)); sizeMultiplier = Number(sizeInput.value); }
+    }
 
-</body>
-</html>
+       Crear elemento de trailing de imagen
+    function createTrailImage(x, y) {
+      const trailImg = document.createElement('img');
+      trailImg.src = images[Math.floor(Math.random() * images.length)];
+      trailImg.className = 'trail-image';
+      trailImg.style.left = x + 'px';
+      trailImg.style.top = y + 'px';
+       tamaños base: entre 80px y 160px, multiplicado por el factor de tamaño
+    const base = 80 + Math.random() * 80;    80 - 160
+    trailImg.style.width = Math.round(base * sizeMultiplier) + 'px';
+      trailImg.style.height = 'auto';
+      trailImg.style.animation = 'fadeOut 1s ease-out forwards';
+
+      document.body.appendChild(trailImg);
+      trailElements.push(trailImg);
+
+         Eliminar elemento después de la animación
+      setTimeout(() => {
+        trailImg.remove();
+        trailElements.splice(trailElements.indexOf(trailImg), 1);
+      }, 1000);
+    }
+
+       Event listener para movimiento del ratón
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+
+      const currentTime = Date.now();
+      if (!paused && (currentTime - lastTrailTime > trailDelay)) {
+        createTrailImage(mouseX - 30, mouseY - 30);
+        lastTrailTime = currentTime;
+      }
+    });
+
+       Soporte touch para móviles (movimiento del dedo)
+    document.addEventListener('touchmove', (e) => {
+      const t = e.touches[0];
+      if (!t) return;
+      mouseX = t.clientX;
+      mouseY = t.clientY;
+      const currentTime = Date.now();
+      if (!paused && (currentTime - lastTrailTime > trailDelay)) {
+        createTrailImage(mouseX - 30, mouseY - 30);
+        lastTrailTime = currentTime;
+      }
+    }, { passive: true });
+
+       Agregar animación CSS dinámicamente
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes fadeOut {
+        0% {
+          opacity: 0.8;
+          transform: scale(1) rotate(0deg);
+        }
+        50% {
+          transform: scale(1.1) rotate(5deg);
+        }
+        100% {
+          opacity: 0;
+          transform: scale(0.5) rotate(10deg) translateY(-30px);
+        }
+      }
+    `;
+    document.head.appendChild(style);
+  < script>
+< body>
+< html>
